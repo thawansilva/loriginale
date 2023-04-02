@@ -1,79 +1,83 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import logo from "/logo/logo.png";
-import { sendPasswordResetEmail } from "firebase/auth";
+import { Link, useNavigate } from "react-router-dom";
+import logoXs from "/logo/logoXs.png";
+import logoSm from "/logo/logoSm.png";
+import logoMd from "/logo/logoMd.png";
 import { auth } from "../../services/firebaseConfig";
-import { Loader } from "../../components/Loader";
 import { Input } from "../../components/Input";
+import { Button } from "../../components/Button";
+import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
 
 export const PasswordReset = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string>("");
+  const [sendPasswordResetEmail, sending, error] =
+    useSendPasswordResetEmail(auth);
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (email) {
-      setIsLoading(true);
-      sendPasswordResetEmail(auth, email)
-        .then(() => {
-          alert("Your password reset email has been sended");
-          navigate("/");
-        })
-        .catch((error) => {
-          return (
-            error.code == "auth/invalid-email" &&
-            setError("We couldn't find the account, please, use a valid email.")
-          );
-        })
-        .finally(() => setIsLoading(false));
-    } else {
-      setError("You need to enter your email");
-    }
+    sendPasswordResetEmail(email).then(() => {
+      alert("The password redefinition email was sended to you :)");
+      navigate("/");
+    });
   };
 
-  if (error) {
-    setTimeout(() => {
-      setError("");
-    }, 7000);
-  }
-
   return (
-    <div className=" md:flex md:h-screen">
-      <div className="relative md:bg-red md:w-1/2">
-        <img
-          src={logo}
-          alt="L'Originale logo"
-          className="my-0 mx-auto w-[220px] md:w-[320px] md:centerItem lg:w-[420px]"
-          loading="lazy"
-        />
-      </div>
-      <div className="relative mx-auto">
+    <div className="centerItem">
+      <section className="md:mb-28 md:-mt-40">
+        <picture>
+          <source srcSet={logoSm} media="(min-width:640px)" />
+          <source srcSet={logoMd} media="(min-width:768px)" />
+          <img
+            src={logoXs}
+            alt="L'Originale logo"
+            className="my-0 mx-auto"
+            loading="lazy"
+          />
+        </picture>
+      </section>
+      <section className="relative mx-auto">
         <div className="md:centerItem">
-          <h1 className="text-3xl font-bold text-center">Password Reset</h1>
+          <h1 className="text-3xl font-bold text-center my-3">
+            Password Reset
+          </h1>
           <div className="w-[278px] mx-auto sm:w-[375px]">
-            <form onSubmit={handleSubmit}>
-              <fieldset>
+            <form onSubmit={handleSubmit} autoComplete="on">
+              <fieldset className="mb-2">
                 <legend className="font-bold">Email</legend>
                 <Input
+                  signPage
                   type="email"
                   title="Enter your email here"
                   value={email}
                   onChange={setEmail}
                 />
               </fieldset>
-              {error && <span className="text-red font-bold">{error}</span>}
-              <button
-                title="Login button"
-                className="font-bold w-full h-10 bg-green rounded-2xl my-2"
-              >
-                {isLoading ? <Loader /> : "Submit"}
-              </button>
+              {error && (
+                <span className="text-red font-bold text-sm">
+                  {error.message}
+                </span>
+              )}
+              <p>
+                Or go to{" "}
+                <Link
+                  to="/"
+                  title="Log in page"
+                  className="inline-block font-bold hover:underline hover:underline-offset-2"
+                >
+                  Log in page
+                </Link>
+              </p>
+
+              <Button
+                title="Send reset password email"
+                content="Send email"
+                loading={sending}
+              />
             </form>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };

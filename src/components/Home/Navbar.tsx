@@ -1,19 +1,20 @@
-import { signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
-import { FaArrowAltCircleRight, FaMoon, FaSun } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import { auth } from "../../services/firebaseConfig";
-import logo from "/logo/logo_removedbg.png";
+import logoXs from "/logo/homepage/Xs/logo.png";
+import logoXsDark from "/logo/homepage/Xs/logo_dark.png";
+import logoSm from "/logo/homepage/Sm/logo.png";
+import logoSmDark from "/logo/homepage/Sm/logo_dark.png";
+import logoMd from "/logo/homepage/Md/logo.png";
+import logoMdDark from "/logo/homepage/Md/logo_dark.png";
+import { useSignOut } from "react-firebase-hooks/auth";
 
 export const Navbar = () => {
-  const navigate = useNavigate();
-  const [isLoading, setisLoading] = useState<boolean>(false);
   const [theme, setTheme] = useState<string>(localStorage.theme);
+  const [signOut, loading, error] = useSignOut(auth);
 
   const handleToggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
-
   useEffect(() => {
     const checkDarkTheme =
       localStorage.theme === "dark" ||
@@ -39,22 +40,23 @@ export const Navbar = () => {
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    setisLoading(true);
-    signOut(auth)
-      .then(() => {
-        navigate("/");
-      })
-      .catch((error) => console.error(error.message))
-      .finally(() => setisLoading(false));
+    signOut();
   };
 
   return (
     <div className="shadow-lg shadow-black/[0.1] dark:shadow-white/[0.1] dark:text-gray">
       <nav className="flex items-center justify-between container mx-auto px-4">
         <picture>
+          <source
+            media="(min-width:640px)"
+            srcSet={theme === "dark" ? logoSmDark : logoSm}
+          />
+          <source
+            srcSet={theme === "dark" ? logoMdDark : logoMd}
+            media="(min-width:768px)"
+          />
           <img
-            className="w-[175px]"
-            src={logo}
+            src={theme === "dark" ? logoXsDark : logoXs}
             alt="Logo with a piece of pizza and a text written L'Originale "
             loading="lazy"
             title="L'Originale Logo"
@@ -66,10 +68,14 @@ export const Navbar = () => {
             className="mr-3"
             title={theme === "dark" ? "Light Theme" : " Dark Theme"}
           >
-            {theme === "dark" ? <FaSun /> : <FaMoon />}
+            {theme === "dark" ? (
+              <i className="fa-solid fa-sun"></i>
+            ) : (
+              <i className="fa-solid fa-moon"></i>
+            )}
           </button>
           <button onClick={handleSubmit} title="Log out">
-            <FaArrowAltCircleRight />
+            <i className="fa-solid fa-arrow-right-from-bracket"></i>
           </button>
         </div>
       </nav>

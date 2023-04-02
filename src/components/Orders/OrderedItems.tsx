@@ -1,8 +1,9 @@
-import { collection, getDocs, Timestamp } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { collection, Timestamp } from "firebase/firestore";
+import { useState } from "react";
 import { db } from "../../services/firebaseConfig";
 import { Loader } from "../Loader";
-import { FilterButtons } from "./FilterButtons";
+import { useCollection } from "react-firebase-hooks/firestore";
+import { FilterOrder } from "./FilterOrder";
 import { Items } from "./Items";
 
 export interface OrdersProps {
@@ -15,35 +16,34 @@ export interface OrdersProps {
 }
 
 export const OrderedItems = () => {
-  const [orders, setOrders] = useState<OrdersProps[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [orderStatus, setOrderStatus] = useState<string>("Open");
+  const [value, loading, error] = useCollection(collection(db, "orders"));
+  const handleChangeStatus = (status: string): void => {
+    setOrderStatus(status);
+  };
 
-  // RESOLVER PROBLEMA DE ATUALIZAÇÃO DOS DOCS
-  useEffect(() => {
-    setIsLoading(true);
-    getDocs(collection(db, "orders")).then(({ docs }) => {
-      const data = docs.map((doc) => {
-        return { id: doc.id, ...doc.data() } as OrdersProps;
-      });
-      setOrders(data);
-      setIsLoading(false);
-    });
-  }, []);
+  const listOfOrders: OrdersProps[] | undefined = value?.docs.map((doc) => {
+    return { id: doc.id, ...doc.data() } as OrdersProps;
+  });
+
   return (
-    <div className="py-6">
-      <FilterButtons />
+    <section className="py-6 md:w-3/5">
+      <FilterOrder handleChangeStatus={handleChangeStatus} />
       <div className="p-4 bg-red rounded-2xl mt-3 md:w-11/12 mx-auto lg:w-full">
-        {orders && !isLoading ? (
-          orders.map((order) => {
-            return <Items key={order.id} order={order} />;
-          })
+        {listOfOrders && !loading ? (
+          listOfOrders
+            .filter((order) => order.status === orderStatus)
+            .map((order) => {
+              return <Items key={order.id} order={order} />;
+            })
         ) : (
           <Loader />
         )}
-        {orders.length == 0 && !isLoading && (
+        {listOfOrders?.length == 0 && !loading && (
           <p className="text-center text-white">There is no order currently</p>
         )}
+        {error && <p>{error?.message}</p>}
       </div>
-    </div>
+    </section>
   );
 };

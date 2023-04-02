@@ -2,6 +2,7 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { useState } from "react";
 import { db } from "../../services/firebaseConfig";
 import { Input } from "../Input";
+import { Button } from "../Button";
 
 export const OrderSection = () => {
   const [orderName, setOrderName] = useState<string>("");
@@ -17,7 +18,7 @@ export const OrderSection = () => {
         orderName: orderName,
         pizzaFlavor: pizzaFlavor,
         observations: observations,
-        status: "open",
+        status: "Open",
         created_at: serverTimestamp(),
       })
         .then(() => {
@@ -33,8 +34,8 @@ export const OrderSection = () => {
   };
 
   return (
-    <div className="py-6 sm:w-[400px] mx-auto">
-      <h2 className="text-center text-2xl font-bold mb-2 dark:text-gray">
+    <section className="py-6 sm:w-[375px] mx-auto">
+      <h2 className="text-center text-2xl font-bold mb-2 dark:text-gray md:text-3xl">
         Order Pizza
       </h2>
       <form
@@ -49,7 +50,7 @@ export const OrderSection = () => {
             onChange={setOrderName}
           />
         </fieldset>
-        <fieldset>
+        <fieldset className="mt-3">
           <Input
             type="text"
             title="Kind of pizza"
@@ -57,23 +58,21 @@ export const OrderSection = () => {
             onChange={setPizzaFlavor}
           />
         </fieldset>
-        <fieldset>
+        <fieldset className="mt-3">
           <textarea
             className="w-full h-40 pt-2 px-3 bg-gray placeholder:text-black/[.5] rounded-2xl outline-none mb-3"
-            aria-multiline
             name="observation"
             onChange={(e) => setObservations(e.target.value)}
             placeholder="Any observation? (Opcional)"
           ></textarea>
         </fieldset>
-        <button className="font-bold w-[200px] h-10  bg-green rounded-2xl">
-          {isLoading ? (
-            <div className="border-4 border-t-gray border-transparent rounded-[50%] w-6 h-6 animate-spin mx-auto my-0"></div>
-          ) : (
-            "Add"
-          )}
-        </button>
+        <Button
+          isLoading={isLoading}
+          title="Add Order"
+          content="Add"
+          width="200px"
+        />
       </form>
-    </div>
+    </section>
   );
 };
