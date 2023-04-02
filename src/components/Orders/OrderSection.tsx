@@ -67,7 +67,7 @@ export const OrderSection = () => {
           ></textarea>
         </fieldset>
         <Button
-          isLoading={isLoading}
+          loading={isLoading}
           title="Add Order"
           content="Add"
           width="200px"
