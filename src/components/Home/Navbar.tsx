@@ -7,8 +7,10 @@ import logoSmDark from "/logo/homepage/Sm/logo_dark.png";
 import logoMd from "/logo/homepage/Md/logo.png";
 import logoMdDark from "/logo/homepage/Md/logo_dark.png";
 import { useSignOut } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
+  const navigate = useNavigate();
   const [theme, setTheme] = useState<string>(localStorage.theme);
   const [signOut, loading, error] = useSignOut(auth);
 
@@ -40,7 +42,7 @@ export const Navbar = () => {
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    signOut();
+    signOut().then(() => navigate("/"));
   };
 
   return (

@@ -1,10 +1,11 @@
 import { collection, Timestamp } from "firebase/firestore";
 import { useState } from "react";
 import { db } from "../../services/firebaseConfig";
-import { Loader } from "../Loader";
+
 import { useCollection } from "react-firebase-hooks/firestore";
 import { FilterOrder } from "./FilterOrder";
 import { Items } from "./Items";
+import { Loader } from "../../styles/Loader";
 
 export interface OrdersProps {
   id: string;

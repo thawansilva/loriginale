@@ -5,8 +5,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../services/firebaseConfig";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { Input } from "../../components/Input";
-import { Button } from "../../components/Button";
+import { Button } from "../../styles/Button";
+import { Input } from "../../styles/Input";
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export const Register = () => {
     navigate("/");
   }
   return (
-    <>
+    <div className="bg-gray">
       <div className="pt-20 sm:pt-30 my-auto md:flex md:h-screen md:pt-0">
         <section className="relative md:bg-gradient-to-b md:from-red md:to-red/[0.4] md:w-1/2">
           <picture>
@@ -52,18 +52,17 @@ export const Register = () => {
                     signPage
                     type="email"
                     onChange={setEmail}
-                    title="Enter your email here"
+                    placeholder="Enter your email here"
                     value={email}
                   />
                 </fieldset>
-
                 <fieldset className="mt-3 mb-1 relative">
                   <legend className="font-bold">Password</legend>
                   <Input
                     signPage
                     type={isPasswordVisible ? "text" : "password"}
                     onChange={setPassword}
-                    title="Enter your password here"
+                    placeholder="Enter your password here"
                     value={password}
                   />
                   <div
@@ -106,6 +105,6 @@ export const Register = () => {
           </div>
         </section>
       </div>
-    </>
+    </div>
   );
 };

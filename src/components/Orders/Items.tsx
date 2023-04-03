@@ -1,26 +1,31 @@
-import { deleteDoc, doc, Timestamp } from "firebase/firestore";
+import { deleteDoc, doc, Timestamp, updateDoc } from "firebase/firestore";
 import { db } from "../../services/firebaseConfig";
 import {
   convertTimestampToUSDateTime,
   getColorStatus,
 } from "../../utils/functions";
+import { useState } from "react";
+import { OrdersProps } from "./OrderedItems";
 
-interface OrdersProps {
-  order: {
-    id: string;
-    orderName: string;
-    pizzaFlavor: string;
-    status: string;
-    observations: string;
-    created_at: Timestamp;
-  };
+export interface ItemsProps {
+  order: OrdersProps;
 }
 
-export const Items = ({ order }: OrdersProps) => {
+export const Items = ({ order }: ItemsProps) => {
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [newStatus, setNewStatus] = useState<string>(order.status);
+
   const handleDeleteOrder = (id: string) => {
     deleteDoc(doc(db, "orders", id))
       .then(() => {})
       .catch((error) => console.error(error));
+  };
+  const handleUpdateStatus = async () => {
+    const orderRef = doc(db, "orders", order.id);
+    if (newStatus) {
+      await updateDoc(orderRef, { status: newStatus });
+      setEditMode((prevEditMode) => !prevEditMode);
+    }
   };
 
   return (
@@ -31,24 +36,64 @@ export const Items = ({ order }: OrdersProps) => {
       >
         <div className="relative mb-6">
           <div>
-            <h3 className="text-lg md:text-2xl">{order.pizzaFlavor} Pizza</h3>
-            <span className="text-md md:text-lg">Status: {order.status}</span>
+            <h3 className="text-base font-bold sm:text-2xl">
+              {order.pizzaFlavor} Pizza
+            </h3>
+            {editMode ? (
+              <fieldset>
+                <label className="text-sm sm:text-lg inline-block">
+                  Status:
+                </label>
+                <select
+                  className="text-sm sm:text-lg inline-block ml-2 border border-black"
+                  name="status"
+                  defaultValue={order.status}
+                  onChange={(e) => {
+                    setNewStatus(e.target.value);
+                  }}
+                >
+                  <option value="Open">Open</option>
+                  <option value="Doing">Doing</option>
+                  <option value="Finished">Finished</option>
+                </select>
+              </fieldset>
+            ) : (
+              <span className="text-md md:text-lg">Status: {order.status}</span>
+            )}
             <p className="text-md md:text-lg">{order.observations}</p>
           </div>
+
           <div className="absolute top-1 right-1">
-            <button title="Edit order" className="mr-2" onClick={() => {}}>
-              <i className="fa-solid fa-pen-to-square"></i>
-            </button>
-            <button
-              title="Delete order"
-              onClick={() => handleDeleteOrder(order.id)}
-            >
-              <i className="fa-regular fa-trash-can"></i>
-            </button>
+            {editMode ? (
+              <>
+                <button
+                  className="text-sm font-bold w-full bg-green h-10 mt-2 rounded-2xl sm:text-base px-2"
+                  onClick={() => handleUpdateStatus()}
+                >
+                  Update
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  title="Edit order"
+                  className="mr-2"
+                  onClick={() => setEditMode((prevEditMode) => !prevEditMode)}
+                >
+                  <i className="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button
+                  title="Delete order"
+                  onClick={() => handleDeleteOrder(order.id)}
+                >
+                  <i className="fa-regular fa-trash-can"></i>
+                </button>
+              </>
+            )}
           </div>
         </div>
         <div className="flex flex-col justify-between text-xs sm:flex-row md:text-sm">
-          <span>Created by: {order.orderName}</span>
+          <span>Ordered by: {order.orderName}</span>
           <span>
             Ordered at:{" "}
             {convertTimestampToUSDateTime(order.created_at?.toMillis())}

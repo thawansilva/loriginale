@@ -1,8 +1,8 @@
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { useState } from "react";
 import { db } from "../../services/firebaseConfig";
-import { Input } from "../Input";
-import { Button } from "../Button";
+import { Button } from "../../styles/Button";
+import { Input } from "../../styles/Input";
 
 export const OrderSection = () => {
   const [orderName, setOrderName] = useState<string>("");
@@ -45,7 +45,7 @@ export const OrderSection = () => {
         <fieldset>
           <Input
             type="text"
-            title="Who ordered the pizza"
+            placeholder="Who ordered the pizza"
             value={orderName}
             onChange={setOrderName}
           />
@@ -53,7 +53,7 @@ export const OrderSection = () => {
         <fieldset className="mt-3">
           <Input
             type="text"
-            title="Kind of pizza"
+            placeholder="Kind of pizza"
             value={pizzaFlavor}
             onChange={setPizzaFlavor}
           />
@@ -62,6 +62,7 @@ export const OrderSection = () => {
           <textarea
             className="w-full h-40 pt-2 px-3 bg-gray placeholder:text-black/[.5] rounded-2xl outline-none mb-3"
             name="observation"
+            value={observations}
             onChange={(e) => setObservations(e.target.value)}
             placeholder="Any observation? (Opcional)"
           ></textarea>

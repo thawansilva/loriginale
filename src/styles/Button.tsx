@@ -1,10 +1,11 @@
 import { Loader } from "./Loader";
 
 interface ButtonsProps {
-  loading: boolean;
+  loading?: boolean;
   title: string;
   content: string;
   width?: string;
+  onClick?: () => void;
 }
 
 interface FilterButtonProps {
@@ -13,12 +14,19 @@ interface FilterButtonProps {
   handleChangeStatus: (status: string) => void;
 }
 
-export const Button = ({ loading, width, title, content }: ButtonsProps) => {
+export const Button = ({
+  loading,
+  width,
+  title,
+  content,
+  onClick,
+}: ButtonsProps) => {
   return (
     <button
       title={title}
-      className="font-bold w-full bg-green h-10 rounded-2xl my-2"
+      className="text-sm font-bold w-full bg-green h-10 rounded-2xl my-2 sm:text-base"
       style={{ width: width && width }}
+      onClick={onClick}
     >
       {loading ? <Loader /> : content}
     </button>
@@ -34,7 +42,7 @@ export const FilterButton = ({
 
   return (
     <button
-      className="font-bold mx-auto h-10 bg-green rounded-2xl my-2 w-[150px] hover:shadow-md shadow-black dark:shadow-gray active:shadow-inner transition duration-150"
+      className="text-sm font-bold mx-auto h-10 bg-green rounded-2xl my-2 w-[150px] hover:shadow-md shadow-black dark:shadow-gray active:shadow-inner transition duration-150 sm:text-base"
       style={styleFilterButton}
       title={`Filter by ${content} status`}
       onClick={() => handleChangeStatus(content)}

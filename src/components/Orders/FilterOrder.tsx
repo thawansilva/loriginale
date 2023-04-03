@@ -1,4 +1,4 @@
-import { FilterButton } from "../Button";
+import { FilterButton } from "../../styles/Button";
 
 interface FilterOrderProps {
   handleChangeStatus: (status: string) => void;

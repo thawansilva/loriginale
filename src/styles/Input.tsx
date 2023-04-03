@@ -1,14 +1,14 @@
 type InputProps = {
   signPage?: boolean;
   type: string;
-  title: string;
+  placeholder: string;
   value: string;
   onChange: (textInput: string) => void;
 };
 export const Input = ({
   signPage,
   type,
-  title,
+  placeholder,
   value,
   onChange,
 }: InputProps) => {
@@ -21,7 +21,7 @@ export const Input = ({
       required
       value={value}
       type={type}
-      placeholder={title}
+      placeholder={placeholder}
       onChange={(e) => onChange(e.target.value)}
     />
   );
