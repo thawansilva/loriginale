@@ -30,7 +30,7 @@ export const OrderedItems = () => {
   return (
     <section className="py-6 md:w-3/5">
       <FilterOrder handleChangeStatus={handleChangeStatus} />
-      <div className="p-4 bg-red rounded-2xl mt-3 md:w-11/12 mx-auto lg:w-full">
+      <div className="p-4 bg-red rounded-2xl mt-3 mx-auto md:w-full">
         {listOfOrders && !loading ? (
           listOfOrders
             .filter((order) => order.status === orderStatus)

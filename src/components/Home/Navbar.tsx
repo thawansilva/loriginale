@@ -8,6 +8,9 @@ import logoMd from "/logo/homepage/Md/logo.png";
 import logoMdDark from "/logo/homepage/Md/logo_dark.png";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
+import moon from "/icons/moon.svg";
+import sun from "/icons/sun.svg";
+import signOutImg from "/icons/signOut.svg";
 
 export const Navbar = () => {
   const navigate = useNavigate();
@@ -77,7 +80,7 @@ export const Navbar = () => {
             )}
           </button>
           <button onClick={handleSubmit} title="Log out">
-            <i className="fa-solid fa-arrow-right-from-bracket"></i>
+            <i className="fa-solid fa-right-from-bracket"></i>
           </button>
         </div>
       </nav>

@@ -42,7 +42,7 @@ export const FilterButton = ({
 
   return (
     <button
-      className="text-sm font-bold mx-auto h-10 bg-green rounded-2xl my-2 w-[150px] hover:shadow-md shadow-black dark:shadow-gray active:shadow-inner transition duration-150 sm:text-base"
+      className="text-sm font-bold mx-auto h-10 bg-green rounded-2xl my-2 w-[150px] transition ease-in-out duration-300 hover:shadow-md hover:shadow-black dark:shadow-gray active:shadow-inner sm:text-base"
       style={styleFilterButton}
       title={`Filter by ${content} status`}
       onClick={() => handleChangeStatus(content)}

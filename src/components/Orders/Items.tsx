@@ -1,4 +1,4 @@
-import { deleteDoc, doc, Timestamp, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../services/firebaseConfig";
 import {
   convertTimestampToUSDateTime,
@@ -77,22 +77,23 @@ export const Items = ({ order }: ItemsProps) => {
               <>
                 <button
                   title="Edit order"
-                  className="mr-2"
+                  className="mr-2 w-[18px]"
                   onClick={() => setEditMode((prevEditMode) => !prevEditMode)}
                 >
                   <i className="fa-solid fa-pen-to-square"></i>
                 </button>
                 <button
                   title="Delete order"
+                  className="w-4"
                   onClick={() => handleDeleteOrder(order.id)}
                 >
-                  <i className="fa-regular fa-trash-can"></i>
+                  <i className="fa-solid fa-trash-can"></i>
                 </button>
               </>
             )}
           </div>
         </div>
-        <div className="flex flex-col justify-between text-xs sm:flex-row md:text-sm">
+        <div className="flex flex-col justify-between text-xs lg:flex-row md:text-sm">
           <span>Ordered by: {order.orderName}</span>
           <span>
             Ordered at:{" "}
