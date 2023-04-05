@@ -3,11 +3,11 @@
 A React + Firebase Project that allows the employees of a Pizzeria to add make pizza orders, delete and/or change the status of the order.
 
 <p align="center">
-<img src="logIn.png" alt="A image showing the log in page of the project, the logo is on the left with a red background and the log in form with the email and password inputs are on the right."/>
+<img src="./assets/logIn.png" alt="A image showing the log in page of the project, the logo is on the left with a red background and the log in form with the email and password inputs are on the right."/>
 </p>
 
 <p align="center">
-<img src="homePage.png" alt="Image of the home page, the navbar is on top with the logo image on the left and the dark mode and sign out button is on the right, the main section contain the order section where the person put the informations of the order, and the orders section where it shows the orders that were asked."/>
+<img src="./assets/homePage.png" alt="Image of the home page, the navbar is on top with the logo image on the left and the dark mode and sign out button is on the right, the main section contain the order section where the person put the informations of the order, and the orders section where it shows the orders that were asked."/>
 </p>
 
 ## Features
