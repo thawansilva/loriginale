@@ -1,6 +1,6 @@
 # L'Originale
 
-A React + Firebase Project that allows the employees of a Pizzeria to add make pizza orders, delete and/or change the status of the order.
+A React + Firebase Project that allows the employees of a Pizzeria to make pizza orders, delete and/or change the status of the order.
 
 <p align="center">
 <img src="./assets/logIn.png" alt="A image showing the log in page of the project, the logo is on the left with a red background and the log in form with the email and password inputs are on the right."/>
