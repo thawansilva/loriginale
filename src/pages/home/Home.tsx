@@ -5,6 +5,7 @@ import { OrderSection } from "../../components/Orders/OrderSection";
 import { auth } from "../../services/firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
+import { Footer } from "../../components/Home/Footer";
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ export const Home = () => {
             <OrderedItems />
           </div>
         </main>
+        <Footer />
       </div>
     </>
   );
