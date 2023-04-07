@@ -8,21 +8,23 @@ import { PasswordReset } from "../pages/passwordReset/PasswordReset";
 
 export const Router = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <Login />
-            </PrivateRoute>
-          }
-        />
-        <Route path="/home" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/passwordreset" element={<PasswordReset />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <div className="bg-gray font-lato h-screen dark:bg-blackDarkMode">
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <Login />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/home" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/passwordreset" element={<PasswordReset />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 };

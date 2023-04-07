@@ -1,11 +1,10 @@
 import { collection, Timestamp } from "firebase/firestore";
-import { useState } from "react";
 import { db } from "../../services/firebaseConfig";
-
 import { useCollection } from "react-firebase-hooks/firestore";
 import { FilterOrder } from "./FilterOrder";
-import { Items } from "./Items";
 import { Loader } from "../../styles/Loader";
+import { useState } from "react";
+import { ShowOrders } from "./ShowOrders";
 
 export interface OrdersProps {
   id: string;
@@ -22,25 +21,22 @@ export const OrderedItems = () => {
   const handleChangeStatus = (status: string): void => {
     setOrderStatus(status);
   };
-
-  const listOfOrders: OrdersProps[] | undefined = value?.docs.map((doc) => {
+  let allOrders: OrdersProps[] | undefined = value?.docs.map((doc) => {
     return { id: doc.id, ...doc.data() } as OrdersProps;
   });
+  let dataIsFetched = allOrders && !loading;
+  let noDataAvailable = allOrders?.length == 0 && !loading;
 
   return (
     <section className="py-6 md:w-3/5">
       <FilterOrder handleChangeStatus={handleChangeStatus} />
       <div className="p-4 bg-red rounded-2xl mt-3 mx-auto md:w-full">
-        {listOfOrders && !loading ? (
-          listOfOrders
-            .filter((order) => order.status === orderStatus)
-            .map((order) => {
-              return <Items key={order.id} order={order} />;
-            })
+        {dataIsFetched ? (
+          <ShowOrders data={allOrders} orderStatus={orderStatus} />
         ) : (
           <Loader />
         )}
-        {listOfOrders?.length == 0 && !loading && (
+        {noDataAvailable && (
           <p className="text-center text-white">There is no order currently</p>
         )}
         {error && <p>{error?.message}</p>}
