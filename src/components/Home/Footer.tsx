@@ -6,7 +6,7 @@ export const Footer = () => {
           A project by:{" "}
           <a
             className="font-bold hover:text-red transition ease-in-out duration-200"
-            href="https://thawan.netlify.app"
+            href="https://thawanps.vercel.app/"
           >
             Thawan Silva
           </a>

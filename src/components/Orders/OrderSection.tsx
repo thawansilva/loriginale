@@ -35,11 +35,11 @@ export const OrderSection = () => {
 
   return (
     <section className="py-6 sm:w-[375px] mx-auto">
-      <h2 className="text-center text-2xl font-bold mb-2 dark:text-gray md:text-3xl">
+      <h2 className="mb-2 text-2xl font-bold text-center dark:text-gray md:text-3xl">
         Order Pizza
       </h2>
       <form
-        className="p-4 bg-red rounded-2xl text-center"
+        className="p-4 text-center bg-red rounded-2xl"
         onSubmit={handleNewOrder}
       >
         <fieldset>

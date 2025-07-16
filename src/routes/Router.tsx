@@ -8,7 +8,7 @@ import { PasswordReset } from "../pages/passwordReset/PasswordReset";
 
 export const Router = () => {
   return (
-    <div className="bg-gray font-lato h-screen dark:bg-blackDarkMode">
+    <div className="h-screen bg-gray font-lato dark:bg-blackDarkMode">
       <BrowserRouter>
         <Routes>
           <Route

@@ -47,7 +47,7 @@ export const SignInOrUp = ({
             <img
               src={logoXs}
               alt="L'Originale logo"
-              className="my-0 mx-auto md:centerItem"
+              className="mx-auto my-0 md:centerItem"
               loading="lazy"
             />
           </picture>
@@ -67,7 +67,7 @@ export const SignInOrUp = ({
                     value={email}
                   />
                 </fieldset>
-                <fieldset className="mt-3 mb-1 relative">
+                <fieldset className="relative mt-3 mb-1">
                   <legend className="font-bold">Password</legend>
                   <Input
                     signPage
@@ -77,7 +77,7 @@ export const SignInOrUp = ({
                     value={password}
                   />
                   <div
-                    className="absolute right-3 top-3 cursor-pointer"
+                    className="absolute cursor-pointer right-3 top-3"
                     onClick={handleToggleVisibility}
                     tabIndex={0}
                     title={isPasswordVisible ? "Hide password" : "See password"}
@@ -102,7 +102,7 @@ export const SignInOrUp = ({
                   </div>
                 </fieldset>
                 {error && (
-                  <span className="text-red font-bold text-sm">
+                  <span className="text-sm font-bold text-red">
                     {error?.message}
                   </span>
                 )}
@@ -114,7 +114,7 @@ export const SignInOrUp = ({
               </form>
 
               {title == "Register" ? (
-                <div className=" mx-auto ">
+                <div className="mx-auto ">
                   <div className="text-sm">
                     <p className="inline-block mr-1">Do you have an account?</p>
                     <Link
