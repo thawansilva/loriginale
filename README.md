@@ -57,5 +57,5 @@ o
 ```
 
 <p align="center">
-<sub>A project by <a href="http://thawan.netlify.app/">Thawan Silva</a></sub>
+<sub>A project by <a href="https://thawanps.vercel.app/">Thawan Silva</a></sub>
 </p>
